@@ -1,46 +1,50 @@
 baseurl = "http://anthonyrhowell.com/"
 languageCode = "en-us"
-title = "Anthony Howell's Website"
-theme = "cactus"
-# Enter your tracking code to enable Google Analytics
-# googleAnalytics = ""
-# Disable comments by leaving disqusShortname empty
-# disqusShortname = ""
+title = "Tony Howell"
+theme = "hugo-type-theme"
+# Enable comments by entering your Disqus shortname
+disqusShortname = "anthonyrhowell"
+# Add your tracking code to enable Google Analytics
+googleAnalytics = ""
+# Posts per page
+paginate = 10
+
 
 [params]
-	name = "Tony Howell"
-	description = "This is my website"
-	bio = "I program things. In the cloud..."
-	# Enter optionally your twitter account
-	# twitter = "Your Twitter account"
-	# enableRSS = true
+	author = "Tony Howell"
+	description = "Coding and things"
+	# Either show custom avatar on the top
+	# left by adding the filename in below
+	# avatar = "img/avatar.png"
+	# or use Gravatar by adding an MD5-hash of your email address
+	gravatar = "e06b6c17814fc12ebf9a13d7aa423b4d"
 
-	# The variables below are optionally too and can be used to
-	# translate or customize each string of the theme.
+	headerText = "Coding and things."
+	# To add a header background to the main site, save your image under static/img/.
+	# If now image path is provided, a orange background will be shown instead.
+	# headerImage = ""
+	# copyright = "Released under the MIT license<br>Powered by [Hugo](//gohugo.io/) with the [Type Theme](//github.com/digitalcraftsman/hugo-type-theme)"
 
-	# Navigation links
-	home = ""
-	about = ""
-	subscribe = ""
-	# Pagination links
-	olderPosts = ""
-	newerPosts = ""
-	readMore = ""
-	copyright = ""
-	# Sharing options and author information in posts
-	aboutAuthor = "I like codin things"
-	tweet = ""
-	share = ""
-	# 404 page
-	title404 = ""
-	subtitle404 = ""
 
-    # Social icons style - circle, rounded, or empty
-    socialIconStyle = "circle"
-
-# Add additional social link entries underneath
-[social]
-    twitter  = "https://www.twitter.com/"
-    facebook = "https://www.facebook.com/"
-    github   = "https://www.github.com/"
-    dribble  = "https://www.dribbble.com/"
+	[params.social]
+	# Insert your accout name and the icon will be shown in the right menu
+		rss = true
+		email = "tony@arh.email"
+		behance = ""
+		bitbucket  =""
+		dribbble = ""
+		facebook = ""
+		flickr = ""
+		github = "tonycapone"
+		googleplus = ""
+		instagram = ""
+		linkedin = "https://www.linkedin.com/in/tony-howell-262a212a"
+		pinterest = ""
+		reddit = ""
+		soundcloud = ""
+		stackexchange = ""
+		steam = ""
+		tumblr = ""
+		twitter = ""
+		wordpress = ""
+		youtube = ""
