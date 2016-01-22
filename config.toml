@@ -1,0 +1,46 @@
+baseurl = "http://anthonyrhowell.com/"
+languageCode = "en-us"
+title = "Anthony Howell's Website"
+theme = "cactus"
+# Enter your tracking code to enable Google Analytics
+# googleAnalytics = ""
+# Disable comments by leaving disqusShortname empty
+# disqusShortname = ""
+
+[params]
+	name = "Tony Howell"
+	description = "This is my website"
+	bio = "I program things"
+	# Enter optionally your twitter account
+	# twitter = "Your Twitter account"
+	# enableRSS = true
+
+	# The variables below are optionally too and can be used to
+	# translate or customize each string of the theme.
+
+	# Navigation links
+	home = ""
+	about = ""
+	subscribe = ""
+	# Pagination links
+	olderPosts = ""
+	newerPosts = ""
+	readMore = ""
+	copyright = ""
+	# Sharing options and author information in posts
+	aboutAuthor = "I like codin things"
+	tweet = ""
+	share = ""
+	# 404 page
+	title404 = ""
+	subtitle404 = ""
+
+    # Social icons style - circle, rounded, or empty
+    socialIconStyle = "circle"
+
+# Add additional social link entries underneath
+[social]
+    twitter  = "https://www.twitter.com/"
+    facebook = "https://www.facebook.com/"
+    github   = "https://www.github.com/"
+    dribble  = "https://www.dribbble.com/"
