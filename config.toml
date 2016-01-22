@@ -10,7 +10,7 @@ theme = "cactus"
 [params]
 	name = "Tony Howell"
 	description = "This is my website"
-	bio = "I program things. In the cloud"
+	bio = "I program things. In the cloud."
 	# Enter optionally your twitter account
 	# twitter = "Your Twitter account"
 	# enableRSS = true
