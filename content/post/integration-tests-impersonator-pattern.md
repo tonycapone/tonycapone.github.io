@@ -5,10 +5,11 @@ title = "To Mock or Not to Mock: Automated Integration Tests and the Impersonato
 +++
 
 One debate that comes up a lot in teams I've been on in the past is about how "real" our automated tests should be.
-<!--more-->
+
 Usually we all can agree that we need something more than just unit tests. We need a set of tests that
 exercise our team's code and modules end to end. Where the rift emerges is what to do about remote 3rd
-party APIS. 
+party APIS.
+<!--more-->
 
 The the crux of the debate seems to boil down to this:
 
