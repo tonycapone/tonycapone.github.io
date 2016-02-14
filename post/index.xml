@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Posts on Tony Howell</title>
+    <title>Posts on Tony Howell&#39;s blog about programming and stuff</title>
     <link>http://anthonyrhowell.com/post/</link>
-    <description>Recent content in Posts on Tony Howell</description>
+    <description>Recent content in Posts on Tony Howell&#39;s blog about programming and stuff</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Sat, 13 Feb 2016 13:41:53 -0600</lastBuildDate>
@@ -100,16 +100,6 @@ and responses with the remote service. I also saved a ton of time because I didn
 &lt;p&gt;This set of tests would not replace true end-to-end tests running against the live remote service, but rather supplement them.&lt;/p&gt;
 
 &lt;p&gt;In an upcoming post, I&amp;rsquo;ll share my solution for implementing the Impersonator Pattern in Java with &lt;a href=&#34;http://wiremock.org/&#34;&gt;Wiremock&lt;/a&gt;.&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Second Post</title>
-      <link>http://anthonyrhowell.com/post/post2/</link>
-      <pubDate>Fri, 22 Jan 2016 11:16:50 -0600</pubDate>
-      
-      <guid>http://anthonyrhowell.com/post/post2/</guid>
-      <description>&lt;p&gt;Another test&lt;/p&gt;
 </description>
     </item>
     
