@@ -12,7 +12,7 @@ various labels of integration/endtoend/functional/acceptance tests.
 The the crux of the debate seems to boil down to this:
 
   *We need a set of tests that test our code end to end, BUT how should our automated tests
-  interact with external systems (such as a 3rd party ReST API).
+  interact with external systems (such as a 3rd party REST API).
   Should we allow the calls to go through to the real thing, or use a test double?*
 
 Some of the points that usually come up, all valid:
