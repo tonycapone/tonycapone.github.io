@@ -4,15 +4,16 @@ date = "2016-02-13T13:41:53-06:00"
 title = "To Mock or Not to Mock: Automated Integration Tests and the Impersonator Pattern"
 +++
 
-One debate that comes up a lot in teams I've been on in the past is about our "real" our automated tests should be.
+One debate that comes up a lot in teams I've been on in the past is about how "real" our automated tests should be.
 <!--more-->
-Not unit tests; those everyone seems to agree on. I'm talking those *other* tests which seem to defy definition, but fall under the
-various labels of integration/endtoend/functional/acceptance tests.
+Usually we all can agree that we need something more than just unit tests. We need a set of tests that
+exercise our team's code and modules end to end. Where the rift emerges is what to do about remote 3rd
+party APIS. 
 
 The the crux of the debate seems to boil down to this:
 
-  *We need a set of tests that test our code end to end, BUT how should our automated tests
-  interact with external systems (such as a 3rd party REST API).
+  *How should our automated tests
+  interact with external systems (such as a 3rd party REST API)?
   Should we allow the calls to go through to the real thing, or use a test double?*
 
 Some of the points that usually come up, all valid:
@@ -71,5 +72,7 @@ and responses with the remote service. I also saved a ton of time because I didn
 My tests will run faster because I'm interacting with a local test double. Because they're so fast, this set of tests could even be run along side unit tests on the developer's laptop, further increasing confidence before checking the code in.
 
 This set of tests would not replace true end-to-end tests running against the live remote service, but rather supplement them.
+
+
 
 In an upcoming post, I'll share my solution for implementing the Impersonator Pattern in Java with [Wiremock](http://wiremock.org/).
