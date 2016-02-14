@@ -1,0 +1,226 @@
+		<!DOCTYPE html>
+<html lang="en-us">
+<head>
+	<title>To Mock or Not to Mock: Automated Integration Tests and the Impersonator Pattern &middot; Tony Howell</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-Frame-Options" content="sameorigin">
+	<meta name="author" content="Tony Howell">
+	<meta name="description" content="Coding and things">
+	<meta name="generator" content="Hugo 0.15" />
+
+	<!-- CSS -->
+	<link rel="stylesheet" href="http://anthonyrhowell.com/css/main.css">
+
+	<!--Favicon-->
+	<link rel="shortcut icon" href="http://anthonyrhowell.com/favicon.ico" type="image/x-icon">
+
+	<!-- RSS -->
+	
+
+	<!-- Font Awesome -->
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+
+	<!-- Google Fonts -->
+	<link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,700italic,400italic" rel="stylesheet" type="text/css">
+</head>
+		<body>
+			<header class="site-header">
+	<div class="branding">
+		<a href="http://anthonyrhowell.com/">
+		
+			<img class="avatar" src="https://www.gravatar.com/avatar/e06b6c17814fc12ebf9a13d7aa423b4d?s=100&d=identicon" alt=""/>
+		
+		</a>
+		<h1 class="site-title">
+			<a href="http://anthonyrhowell.com/">Tony Howell</a>
+		</h1>
+	</div>
+	<nav class="site-nav">
+		<ul>
+	      	
+
+	      	
+<li>
+	<a href="http://anthonyrhowell.com/index.xml" title="Subcribe">
+		<i class="fa fa-fw fa-rss"></i>
+	</a>
+</li>
+
+
+
+<li>
+	<a href="mailto:tony@arh.email" title="Email">
+		<i class="fa fa-fw fa-envelope"></i>
+	</a>
+</li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li>
+	<a href="https://github.com/tonycapone" title="Github">
+		<i class="fa fa-fw fa-github"></i>
+	</a>
+</li>
+
+
+
+
+
+
+
+<li>
+	<a href="https://www.linkedin.com/in/tony-howell-262a212a" title="Linkedin">
+		<i class="fa fa-fw fa-linkedin"></i>
+	</a>
+</li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	    </ul>
+	</nav>
+</header>
+			<div class="content">
+				
+				<article>
+					<header>
+						<h1 class="title">To Mock or Not to Mock: Automated Integration Tests and the Impersonator Pattern</h1>
+					</header>
+				
+
+				<section class="post-content">
+					
+
+<p>One debate that comes up a lot in teams I&rsquo;ve been on in the past is about our &ldquo;real&rdquo; our automated tests should be.</p>
+
+<p>Not unit tests; those everyone seems to agree on. I&rsquo;m talking those <em>other</em> tests which seem to defy definition, but fall under the
+various labels of integration/endtoend/functional/acceptance tests.</p>
+
+<p>The the crux of the debate seems to boil down to this:</p>
+
+<p><em>We need a set of tests that test our code end to end, BUT how should our automated tests
+  interact with external systems (such as a 3rd party ReST API).
+  Should we allow the calls to go through to the real thing, or use a test double?</em></p>
+
+<p>Some of the points that usually come up, all valid:</p>
+
+<h3 id="reasons-not-to-use-test-doubles:83d5e732b1c6f9cb8932522304f03bd8">Reasons not to use test doubles:</h3>
+
+<p>If you mock that service out, then the tests aren&rsquo;t really &ldquo;real.&rdquo; There is a risk that the tests are invalid,
+because assumptions made about how the service will respond were incorrect, or could become out of date. There is also considerable time to invest in stubbing out the interactions, as well as maintenance to keep the tests up to date.</p>
+
+<h3 id="reasons-to-use-a-test-double:83d5e732b1c6f9cb8932522304f03bd8">Reasons to use a test double</h3>
+
+<p>On the other hand, if the external system has long running tasks that take seconds or minutes to complete,
+I might have to add arbitrary sleeps(), which can lead to brittle tests. They may run much slower, which will decrease
+how often we run them.</p>
+
+<p>If the external system is flaky, I have a suite of flaky tests,
+<a href="http://martinfowler.com/articles/nonDeterminism.html">which are worse than no tests at all</a>.
+If the interactions result in stateful behavior, then I have to deal with that as well.
+If the calls to the external system make stateful changes, then you have to write extra code to setup and teardown as well.</p>
+
+<p>In retrospect, I think this is a false dichotomy.</p>
+
+<h3 id="you-should-do-both:83d5e732b1c6f9cb8932522304f03bd8">You should do both</h3>
+
+<p>If you&rsquo;re building a continuous delivery pipeline, there is room
+for both types of tests: A set of fast integration tests with the external systems that interact with stubbed out methods on a test double, and a set of slower running acceptance tests that run against the real thing.</p>
+
+<p>Most of my thinking on this comes from reading and listening to what Mr. Continuous Delivery himself, <strong>Jez Humble</strong>, has to say on the matter.
+Jez talks a lot about how your CD pipeline should have several stages, each stage with a set of automated and manual tests that increase confidence that the artifact/code is ready to go to production.</p>
+
+<p>One very interesting, and under-rated, pattern that he talks <strong>Impersonator Pattern</strong>. The Impersonator Pattern answers
+the mock-or-not question by <em>letting you do both.</em></p>
+
+<h3 id="the-impersonator-pattern:83d5e732b1c6f9cb8932522304f03bd8">The Impersonator Pattern</h3>
+
+<p>The Impersonator Pattern (Martin Fowler calls them <a href="http://martinfowler.com/bliki/SelfInitializingFake.html">Self Initializing Fakes</a>) works like this:</p>
+
+<p>We will proxy the calls to the external system through a middle man.
+The first time the call is made, the request will be passed on to the remote system, and transparently pass the response
+back to the caller, <em>while recording the interaction</em>. All subsequent interactions will playback the cached interaction.</p>
+
+
+<figure >
+    
+        <img src="/media/impersonator_pattern.png" alt="Credit: Martin Fowler Bliki http://martinfowler.com/bliki/SelfInitializingFake.html" />
+    
+    
+    <figcaption>
+        <p>
+        Credit: Martin Fowler Bliki http://martinfowler.com/bliki/SelfInitializingFake.html
+        
+            
+        
+        </p> 
+    </figcaption>
+    
+</figure>
+
+
+<p>This pattern offers a nice compromise.</p>
+
+<p>First, the interactions are &ldquo;real.&rdquo; I didn&rsquo;t make assumptions about how the external system would respond, I also saved a ton of time because I didn&rsquo;t have to manually stub out individual calls. My tests will run faster because I&rsquo;m interacting with a local test double.</p>
+
+<p>Because they&rsquo;re so fast, this set of tests could even be run along side unit tests on the developers laptop, further increasing confidence before checking the code in.</p>
+
+<p>This set of tests would not replace true end-to-end tests running against the live remote service, but rather supplement them.</p>
+
+<p>In an upcoming post, I&rsquo;ll share my solution for implementing the Impersonator Pattern in Java with <a href="http://wiremock.org/">Wiremock</a>.</p>
+
+
+				<hr>
+
+				<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'anthonyrhowell';
+    var disqus_identifier = 'http:\/\/anthonyrhowell.com\/post\/integration-tests-impersonator-pattern\/';
+    var disqus_title = 'To Mock or Not to Mock: Automated Integration Tests and the Impersonator Pattern';
+    var disqus_url = 'http:\/\/anthonyrhowell.com\/post\/integration-tests-impersonator-pattern\/';
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+				</section>
+
+			</article>
+			<footer class="site-footer">
+	<p class="text">&copy; 2016 - Anthony Howell</p>
+</footer>
+
+
+		</div>
+	</body>
+</html>
