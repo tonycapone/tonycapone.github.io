@@ -1,6 +1,6 @@
 baseurl = "http://anthonyrhowell.com/"
 languageCode = "en-us"
-title = "Tony Howell"
+title = "Tony Howell's blog about programming and stuff"
 theme = "hugo-type-theme"
 # Enable comments by entering your Disqus shortname
 disqusShortname = "anthonyrhowell"
